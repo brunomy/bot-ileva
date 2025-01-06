@@ -3,71 +3,25 @@ import time
 
 # Pausa
 pyautogui.PAUSE = 0.5 #Pausa Geral
-# time.sleep(3)
 
-# Teclado
-# pyautogui.keyDown('alt')
-# pyautogui.press(['tab'])
-# pyautogui.keyUp('alt')
-# pyautogui.write('Banana')
-# pyautogui.hotkey('ctrl', 'c')
-# pyautogui.hotkey('ctrl', 'v')
-# pyautogui.hotkey('c')
-
-
-
-
-# Mouse
-# pyautogui.click('img/1.png')
-# pyautogui.moveTo('img/1.png')
-# pyautogui.drag(xOffset=200, yOffset=200, duration=2)
-# pyautogui.dragTo(100, 200, 2, button='left')
-
-# function
-# def teste():
-#     if(pyautogui.locateOnScreen('img/2.png')):
-#         print('teste')
-#     return
-
-# Pegar tamanho da tela
-# screenWidth, screenHeight = pyautogui.size()
-# pyautogui.size()
-
-# Pegar posição do mouse
-# currentMouseX, currentMouseY = pyautogui.position()
-# pyautogui.position()
-
-# Alertas
-# pyautogui.confirm(text='oi', title='teste', buttons=['OK', 'Cancel'])
-# pyautogui.alert(text='asd', title='asdasd', button='OK')
-# print(pyautogui.position())
-# senha = pyautogui.password(text='Informe a senha', title='PopUp', default='', mask='*')
-# print(senha)
-
-# try:
-#     while pyautogui.locateOnScreen('img/2.png'):
-#         teste()
-# except KeyboardInterrupt:
-#     print('fim')
-
-
+# INICIO
 
 def click_terminal():
     pyautogui.click('img/terminal_parado.png')
     pyautogui.moveTo('img/mouse_hover.png')
     
-
-
 def esperar_terminal():
     pyautogui.keyDown('altleft')
     pyautogui.press('tab')
     pyautogui.keyUp('altleft')
     imagem_concontrada = None
+    seg = 1
     while imagem_concontrada is None:
         try:
             imagem_concontrada = pyautogui.locateOnScreen('img/terminal_parado.png')
         except:
-            print('esperando o terminal finalizar')
+            print('esperando o terminal\n('+str(seg)+' segundos)')
+            seg = seg + 1
     print('comando finalizado')
     click_terminal()
     return
@@ -109,10 +63,26 @@ def ctrl_f_external_2():
     time.sleep(1)
     pyautogui.hotkey('ctrlleft', 's')
 
-# 5.6.9
-# 5.7.0
+def excluirRecursoJava():
+    pyautogui.hotkey('win', 'space')
+    pyautogui.write('recursos')
+    pyautogui.hotkey('enter')
+    time.sleep(2)
+    pyautogui.hotkey('pagedown')
+    pyautogui.hotkey('pageup')
+    pyautogui.hotkey('pageup')
+    pyautogui.hotkey('pageup')
+    pyautogui.hotkey('delete')
+    pyautogui.hotkey('down')
+    pyautogui.hotkey('enter')
+    
 
-# ---------------------------------------------------------------------
+    
+
+# # 5.6.9
+# # 5.7.5
+
+# # ---------------------------------------------------------------------
 
 git_customizado = pyautogui.prompt(text='Link do git', title='PopUp', default='')
 nome_pasta = pyautogui.prompt(text='Nome da pasta', title='PopUp', default='')
@@ -216,3 +186,5 @@ comando('git status')
 comando('git commit -m "'+version+'"')
 
 pyautogui.write('git push')
+
+excluirRecursoJava()
