@@ -1,9 +1,15 @@
 import pyautogui
 import time
+import funcoes
+
+import empresas
 
 # Pausa
 pyautogui.PAUSE = 0.5 #Pausa Geral
 # time.sleep(3)
+
+funcoes.excluirRecursoJava()
+funcoes.abrir_navegador(empresas.lista[0])
 
 # Teclado
 # pyautogui.keyDown('alt')
@@ -50,5 +56,3 @@ pyautogui.PAUSE = 0.5 #Pausa Geral
 # except KeyboardInterrupt:
 #     print('fim')
 
-
-pyautogui.alert(text='Processo terminado', title='', button='OK')
