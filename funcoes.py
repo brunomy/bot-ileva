@@ -139,8 +139,7 @@ def build_bundle():
 def excluirRecursoJava():
     pyautogui.hotkey('winleft', 't')
     # comando("chmod +x ~/Home/atualizarAPP/cleanJava.sh")
-    comando("kill -9 442545")
-    comando("kill -9 443807")
+    comando("killall java")
     # pyautogui.hotkey('win', 'space')
     # pyautogui.write('recursos')
     # pyautogui.hotkey('enter')
