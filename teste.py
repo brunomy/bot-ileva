@@ -49,6 +49,7 @@ funcoes.abrir_navegador(empresas.lista[0])
 # print(pyautogui.position())
 # senha = pyautogui.password(text='Informe a senha', title='PopUp', default='', mask='*')
 # print(senha)
+# os.getcwd() #printa pasta atual
 
 # try:
 #     while pyautogui.locateOnScreen('img/2.png'):

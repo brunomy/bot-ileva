@@ -3,3 +3,4 @@ Bot Ileva
 
 pip install pyautogui
 pip install pynput
+pip install pyinstaller

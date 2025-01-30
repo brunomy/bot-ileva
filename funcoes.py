@@ -57,12 +57,6 @@ def remove_external_nano():
 
     
 #Funcoes execução
-def abrir_navegador(emp):
-    os.system('opera')
-    time.sleep(3)
-    comando(emp['git'])
-    pyautogui.hotkey('ctrlleft', 't')
-    comando(emp['play'])
 
 def clonar_repositorio(emp):
     partesUrl = emp['git'].split('/')
@@ -78,7 +72,7 @@ def clonar_repositorio(emp):
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
     os.system('git clone git@gitlab.com:hibrida/ileva/app-api.git')
     os.chdir(pasta)
-    os.system('git clone '+emp['clone'])
+    os.system('git clone git@gitlab.com:hibrida/ileva/apps-customizados/'+pasta+'.git')
     time.sleep(1)
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
     comando('cp -r ../app-api/app ./')
@@ -153,6 +147,32 @@ def git_commit(version, emp):
     time.sleep(3)
     comando('rm -rf '+pasta)
     time.sleep(3)
-    pyautogui.hotkey('ctrlleft', 'shiftleft', 'w')
 
     
+def abrir_navegador(emp):
+    partesUrl = emp['git'].split('/')
+    pasta = partesUrl[-1]
+    
+    os.system('cp ./openBrowser.py ./Aplicativos/'+pasta)
+    time.sleep(1)
+    
+    os.chdir('Aplicativos/'+pasta)
+
+    replace_nano('openBrowser.py', 'linkgit', emp['git'])
+    replace_nano('openBrowser.py', 'linkplay', emp['play'])
+    
+    pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
+    
+    os.system('pyinstaller --onefile --windowed openBrowser.py')
+    os.system('cp ./dist/openBrowser ./')
+    os.chdir('../..')
+    
+    pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
+    
+    comando('rm -rf dist')
+    comando('rm -rf build')
+    comando('rm -rf openBrowser.spec')
+    comando('rm -rf openBrowser.py')
+    
+    pyautogui.hotkey('ctrlleft', 'shiftleft', 'w')
+
