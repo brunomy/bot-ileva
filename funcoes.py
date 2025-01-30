@@ -58,25 +58,22 @@ def remove_external_nano():
     
 #Funcoes execução
 
-def clonar_repositorio(emp):
-    partesUrl = emp['git'].split('/')
-    pasta = partesUrl[-1]
-
+def clonar_repositorio(nome):
     pyautogui.hotkey('winleft', 't')
     pyautogui.hotkey('ctrlleft', 'shiftleft', 't')
     
     comando('cd ~/Home/atualizarAPP/Aplicativos')
     os.chdir('Aplicativos')
-    comando('mkdir '+pasta)
-    comando('cd '+pasta)
+    comando('mkdir '+nome)
+    comando('cd '+nome)
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
     os.system('git clone git@gitlab.com:hibrida/ileva/app-api.git')
-    os.chdir(pasta)
-    os.system('git clone git@gitlab.com:hibrida/ileva/apps-customizados/'+pasta+'.git')
+    os.chdir(nome)
+    os.system('git clone git@gitlab.com:hibrida/ileva/apps-customizados/'+nome+'.git')
     time.sleep(1)
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
     comando('cp -r ../app-api/app ./')
-    comando('cp -r '+pasta+'/.git ./app')
+    comando('cp -r '+nome+'/.git ./app')
     comando('cd app')
     os.chdir('app')
     comando('git restore ./resources ./src/environments config-ios.xml config.xml google-services.json ./publicacao')
@@ -103,27 +100,21 @@ def remove_external():
     remove_external_nano()
     time.sleep(2)
     
-def build_apk(emp):
-    partesUrl = emp['git'].split('/')
-    pasta = partesUrl[-1]
-    
+def build_apk(nome):
     pyautogui.hotkey('winleft', 't')
     replace_nano('build.json', '"bundle"', '"apk"')
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
     os.system('ionic cordova build android --prod --release --buildConfig=build.json')
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
-    comando('mv platforms/android/app/build/outputs/apk/release/app-release.apk ./../'+pasta+'.apk')
+    comando('mv platforms/android/app/build/outputs/apk/release/app-release.apk ./../'+nome+'.apk')
     
-def build_bundle(emp):
-    partesUrl = emp['git'].split('/')
-    pasta = partesUrl[-1]
-
+def build_bundle(nome):
     pyautogui.hotkey('winleft', 't')
     replace_nano('build.json', '"apk"', '"bundle"')
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
     os.system('ionic cordova build android --prod --release --buildConfig=build.json')
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
-    comando('mv platforms/android/app/build/outputs/bundle/release/app-release.aab ./../'+pasta+'.aab')
+    comando('mv platforms/android/app/build/outputs/bundle/release/app-release.aab ./../'+nome+'.aab')
 
 def excluirRecursoJava():
     pyautogui.hotkey('winleft', 't')
@@ -132,10 +123,7 @@ def excluirRecursoJava():
     # os.system("killall code")
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
 
-def git_commit(version, emp):
-    partesUrl = emp['git'].split('/')
-    pasta = partesUrl[-1]
-
+def git_commit(version, nome):
     pyautogui.hotkey('winleft', 't')
     comando('git add .')
     comando('git status')
@@ -145,20 +133,17 @@ def git_commit(version, emp):
     comando('cd ..')
     comando('rm -rf app')
     time.sleep(3)
-    comando('rm -rf '+pasta)
+    comando('rm -rf '+nome)
     time.sleep(3)
 
     
 def abrir_navegador(emp):
-    partesUrl = emp['git'].split('/')
-    pasta = partesUrl[-1]
-    
-    os.system('cp ./openBrowser.py ./Aplicativos/'+pasta)
+    os.system('cp ./openBrowser.py ./Aplicativos/'+emp['nome'])
     time.sleep(1)
     
-    os.chdir('Aplicativos/'+pasta)
+    os.chdir('Aplicativos/'+emp['nome'])
 
-    replace_nano('openBrowser.py', 'linkgit', emp['git'])
+    replace_nano('openBrowser.py', 'linkgit', 'https://gitlab.com/hibrida/ileva/apps-customizados/'+emp['nome'])
     replace_nano('openBrowser.py', 'linkplay', emp['play'])
     
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')

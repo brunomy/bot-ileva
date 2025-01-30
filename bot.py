@@ -7,27 +7,31 @@ import os
 pyautogui.PAUSE = 0.5 #Pausa Geral
 
 # Run
-id = pyautogui.prompt(text='Id empresa', title='PopUp', default='')
+inicio = pyautogui.prompt(text='Início', title='Selecione o range', default='')
+fim = pyautogui.prompt(text='Fim', title='Selecione o range', default='')
 
 old_version = pyautogui.prompt(text='Versão antiga', title='PopUp', default='5.8.0')
 version = pyautogui.prompt(text='Versão nova', title='PopUp', default='5.8.1')
 
-funcoes.clonar_repositorio(empresas.lista[int(id)])
 
-funcoes.mudanca_versao(old_version, version)
 
-funcoes.mudanca_cordova()
+for i in range(int(inicio), int(fim)+1):
+    funcoes.clonar_repositorio(empresas.lista[i]['nome'])
 
-funcoes.remove_external()
+    funcoes.mudanca_versao(old_version, version)
 
-funcoes.build_apk(empresas.lista[int(id)])
+    funcoes.mudanca_cordova()
 
-funcoes.build_bundle(empresas.lista[int(id)])
+    funcoes.remove_external()
 
-funcoes.excluirRecursoJava()
+    funcoes.build_apk(empresas.lista[i]['nome'])
 
-funcoes.git_commit(version, empresas.lista[int(id)])
+    funcoes.build_bundle(empresas.lista[i]['nome'])
 
-funcoes.abrir_navegador(empresas.lista[int(id)])
+    funcoes.excluirRecursoJava()
+
+    funcoes.git_commit(version, empresas.lista[i]['nome'])
+
+    funcoes.abrir_navegador(empresas.lista[i])
 
 # Fazer foreach, e função pra criar navegador

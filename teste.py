@@ -8,8 +8,9 @@ import empresas
 pyautogui.PAUSE = 0.5 #Pausa Geral
 # time.sleep(3)
 
-funcoes.excluirRecursoJava()
-funcoes.abrir_navegador(empresas.lista[0])
+for i in range(0, 1):
+    print(i)
+    
 
 # Teclado
 # pyautogui.keyDown('alt')
