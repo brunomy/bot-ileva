@@ -58,11 +58,12 @@ def remove_external_nano():
     
 #Funcoes execução
 
-def clonar_repositorio(nome):
+def clonar_repositorio(nome, root):
+
     pyautogui.hotkey('winleft', 't')
     pyautogui.hotkey('ctrlleft', 'shiftleft', 't')
     
-    comando('cd ~/Home/atualizarAPP/Aplicativos')
+    comando('cd '+root+'/Aplicativos')
     os.chdir('Aplicativos')
     comando('mkdir '+nome)
     comando('cd '+nome)
@@ -76,14 +77,15 @@ def clonar_repositorio(nome):
     comando('cp -r '+nome+'/.git ./app')
     comando('cd app')
     os.chdir('app')
-    comando('git restore ./resources ./src/environments config-ios.xml config.xml google-services.json ./publicacao')
+    comando('git restore ./resources ./src/environments config-ios.xml config.xml google-services.json')
+    comando('git restore ./publicacao')
     
 def mudanca_versao(old, new):
     replace_nano('config.xml', old, new)
     replace_nano('config-ios.xml', old, new)
     replace_nano('./src/environments/environment.prod.ts', old, new)
 
-def mudanca_cordova():
+def conf_cordova():
     pyautogui.hotkey('winleft', 't')
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
     os.system('ionic cordova resources android --icon')
@@ -137,27 +139,28 @@ def git_commit(version, nome):
     time.sleep(3)
 
     
-def abrir_navegador(emp):
-    os.system('cp ./openBrowser.py ./Aplicativos/'+emp['nome'])
+def abrir_navegador(emp, root):
+    os.system('cp ./gitPush.py ./Aplicativos/'+emp['nome'])
     time.sleep(1)
     
     os.chdir('Aplicativos/'+emp['nome'])
 
-    replace_nano('openBrowser.py', 'linkgit', 'https://gitlab.com/hibrida/ileva/apps-customizados/'+emp['nome'])
-    replace_nano('openBrowser.py', 'linkplay', emp['play'])
+    replace_nano('gitPush.py', 'nomeDaPasta', emp['nome'])
+    replace_nano('gitPush.py', 'play', emp['play'])
+    replace_nano('gitPush.py', 'root', root)
     
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
     
-    os.system('pyinstaller --onefile --windowed openBrowser.py')
-    os.system('cp ./dist/openBrowser ./')
+    os.system('pyinstaller --onefile --windowed gitPush.py')
+    os.system('cp ./dist/gitPush ./')
     os.chdir('../..')
     
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'tab')
     
     comando('rm -rf dist')
     comando('rm -rf build')
-    comando('rm -rf openBrowser.spec')
-    comando('rm -rf openBrowser.py')
+    comando('rm -rf gitPush.spec')
+    comando('rm -rf gitPush.py')
     
     pyautogui.hotkey('ctrlleft', 'shiftleft', 'w')
 

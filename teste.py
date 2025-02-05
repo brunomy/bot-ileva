@@ -1,6 +1,7 @@
 import pyautogui
 import time
 import funcoes
+import os
 
 import empresas
 
@@ -8,9 +9,15 @@ import empresas
 pyautogui.PAUSE = 0.5 #Pausa Geral
 # time.sleep(3)
 
-for i in range(0, 1):
-    print(i)
+# for i in range(0, 1):
+#     print(i)
     
+url = os.getcwd()
+
+# funcoes.replace_nano('gitPush.py', 'trocaAquiCaraio', )
+
+pyautogui.alert(text=url, title='asdasd', button='OK')
+
 
 # Teclado
 # pyautogui.keyDown('alt')

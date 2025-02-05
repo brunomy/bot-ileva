@@ -7,31 +7,47 @@ import os
 pyautogui.PAUSE = 0.5 #Pausa Geral
 
 # Run
-inicio = pyautogui.prompt(text='Início', title='Selecione o range', default='')
-fim = pyautogui.prompt(text='Fim', title='Selecione o range', default='')
+rodando = False
+lista = 'Lista de aplicativos: \n'
+
+root = os.getcwd()
+
+for empresa in empresas.lista:
+    lista = lista + empresa['nome']+"\n"
+
+inicio = pyautogui.prompt(text=lista, title='Início', default='')
+fim = pyautogui.prompt(text=lista, title='Fim', default='')
 
 old_version = pyautogui.prompt(text='Versão antiga', title='PopUp', default='5.8.0')
 version = pyautogui.prompt(text='Versão nova', title='PopUp', default='5.8.1')
 
 
+for empresa in empresas.lista:
+    
+    if(inicio == empresa['nome']):
+        rodando = True
+    
+    if(rodando):
+        funcoes.clonar_repositorio(empresa['nome'], root)
 
-for i in range(int(inicio), int(fim)+1):
-    funcoes.clonar_repositorio(empresas.lista[i]['nome'])
+        funcoes.mudanca_versao(old_version, version)
 
-    funcoes.mudanca_versao(old_version, version)
+        funcoes.conf_cordova()
 
-    funcoes.mudanca_cordova()
+        funcoes.remove_external()
 
-    funcoes.remove_external()
+        funcoes.build_apk(empresa['nome'])
 
-    funcoes.build_apk(empresas.lista[i]['nome'])
+        funcoes.build_bundle(empresa['nome'])
 
-    funcoes.build_bundle(empresas.lista[i]['nome'])
+        funcoes.excluirRecursoJava()
 
-    funcoes.excluirRecursoJava()
+        funcoes.git_commit(version, empresa['nome'])
 
-    funcoes.git_commit(version, empresas.lista[i]['nome'])
-
-    funcoes.abrir_navegador(empresas.lista[i])
+        funcoes.abrir_navegador(empresa, root)
+        
+    if(fim == empresa['nome']):
+        rodando = False
+    
 
 # Fazer foreach, e função pra criar navegador
