@@ -18,8 +18,8 @@ for empresa in empresas.lista:
 inicio = pyautogui.prompt(text=lista, title='Início', default='')
 fim = pyautogui.prompt(text=lista, title='Fim', default='')
 
-old_version = pyautogui.prompt(text='Versão antiga', title='PopUp', default='5.8.0')
-version = pyautogui.prompt(text='Versão nova', title='PopUp', default='5.8.1')
+old_version = pyautogui.prompt(text='Versão antiga', title='PopUp', default='5.8.2')
+version = pyautogui.prompt(text='Versão nova', title='PopUp', default='5.8.3')
 
 
 for empresa in empresas.lista:

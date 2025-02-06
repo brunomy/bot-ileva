@@ -78,6 +78,7 @@ def clonar_repositorio(nome, root):
     comando('cd app')
     os.chdir('app')
     comando('git restore ./resources ./src/environments config-ios.xml config.xml google-services.json')
+    comando('git restore ./GoogleService-Info.plist')
     comando('git restore ./publicacao')
     
 def mudanca_versao(old, new):
